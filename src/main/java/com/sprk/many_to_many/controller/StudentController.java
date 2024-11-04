@@ -5,9 +5,7 @@ import com.sprk.many_to_many.entity.Student;
 import com.sprk.many_to_many.mapper.StudentMapper;
 import com.sprk.many_to_many.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class StudentController {
@@ -20,6 +18,14 @@ public class StudentController {
         Student student = StudentMapper.mappedStudentDto(studentDto,new Student());
 
         studentRepository.save(student);
+        return studentDto;
+    }
+
+    @GetMapping("/get-student/{rollNo}")
+    public StudentDto getStudentByRollNo(@PathVariable int rollNo) {
+        Student student = studentRepository.findById(rollNo).orElseThrow(() -> new RuntimeException("Student Not Found"));
+
+        StudentDto studentDto = StudentMapper.mappedStudent(student,new StudentDto());
         return studentDto;
     }
 }

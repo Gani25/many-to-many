@@ -5,6 +5,8 @@ import lombok.Data;
 @Data
 public class StudentDto {
 
+    private int rollNo;
+
     private String firstName;
 
     private String lastName;

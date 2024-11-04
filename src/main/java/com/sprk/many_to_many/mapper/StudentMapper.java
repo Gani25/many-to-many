@@ -10,6 +10,7 @@ public class StudentMapper {
         student.setFirstName(studentDto.getFirstName());
         student.setLastName(studentDto.getLastName());
         student.setPhone(studentDto.getPhone());
+        student.setRollNo(studentDto.getRollNo());
 
         return student;
     }
@@ -18,6 +19,7 @@ public class StudentMapper {
         studentDto.setFirstName(student.getFirstName());
         studentDto.setLastName(student.getLastName());
         studentDto.setPhone(student.getPhone());
+        studentDto.setRollNo(student.getRollNo());
 
         return studentDto;
     }
