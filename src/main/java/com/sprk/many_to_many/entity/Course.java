@@ -19,7 +19,7 @@ public class Course {
 
     private String duration;
 
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
     @JoinTable(
             name = "course_student",
             joinColumns = @JoinColumn(name = "course_id"),
