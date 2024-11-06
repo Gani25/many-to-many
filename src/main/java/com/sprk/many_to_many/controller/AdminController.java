@@ -1,14 +1,13 @@
 package com.sprk.many_to_many.controller;
 
+import com.sprk.many_to_many.dto.StudentWithCourseDto;
 import com.sprk.many_to_many.entity.Course;
 import com.sprk.many_to_many.entity.Student;
+import com.sprk.many_to_many.mapper.StudentMapper;
 import com.sprk.many_to_many.repository.CourseRepository;
 import com.sprk.many_to_many.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +19,8 @@ public class AdminController {
     private StudentRepository studentRepo;
     @Autowired
     private CourseRepository courseRepo;
+    @Autowired
+    private StudentRepository studentRepository;
 
     @PostMapping("/assign-course-to-student")
     public String addCourseToStudent(@RequestParam int rollNo, @RequestParam int courseId) {
@@ -33,5 +34,13 @@ public class AdminController {
 
         return "Course added successfully";
 
+    }
+
+    @GetMapping("/get-student-with-courses/{rollNo}")
+    public StudentWithCourseDto getStudentWithCourses(@PathVariable int rollNo) {
+        Student student = studentRepository.findStudentWithCourses(rollNo).orElseThrow(()->new RuntimeException("Student Not found"));
+        StudentWithCourseDto studentWithCourseDto = StudentMapper.convertStudentToStudentWithCourseDto(student,new StudentWithCourseDto());
+
+        return studentWithCourseDto;
     }
 }
